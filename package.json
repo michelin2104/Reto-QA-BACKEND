@@ -1,0 +1,13 @@
+{
+  "name": "reto-back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+  "download-karate": "curl -L -o karate.jar https://github.com/karatelabs/karate/releases/download/v1.4.1/karate-1.4.1.jar",
+  "test": "java -jar karate.jar src/test/java/users/users.feature"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

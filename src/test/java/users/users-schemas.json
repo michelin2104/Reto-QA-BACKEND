@@ -1,0 +1,4 @@
+{
+  "createUserResponse": { "message": "#string", "_id": "#string" },
+  "getUserResponse": { "nome": "#string", "email": "#string", "password": "#string", "administrador": "#string", "_id": "#string" }
+}
