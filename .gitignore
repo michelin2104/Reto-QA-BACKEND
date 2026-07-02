@@ -1,0 +1,8 @@
+# Dependencias de Node.js (se instalan al iniciar con npm install)
+node_modules/
+# Archivos pesados o ejecutables locales
+karate.jar
+
+# Reportes y archivos temporales generados al ejecutar las pruebas
+target/
+.katarte/
