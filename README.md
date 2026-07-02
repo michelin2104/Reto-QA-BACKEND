@@ -18,3 +18,13 @@ Antes de ejecutar el proyecto, asegúrate de tener instalado:
    ```bash
    git clone https://github.com/michelin2104/Reto-QA-BACKEND.git
    cd reto-qa-serverest
+
+   Instalar dependencias e inicializar el entorno:
+
+Bash
+npm install
+Descargar el motor ejecutable de Karate:
+Ejecuta el script personalizado de Node para descargar el componente standalone necesario:
+
+Bash
+npm run download-karate
