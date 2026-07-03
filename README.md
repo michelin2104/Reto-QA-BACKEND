@@ -154,6 +154,7 @@ Esto asegura que la API retorne exactamente los campos esperados con los tipos c
 - **Casos Positivos**: 1 escenario (contiene 4 operaciones HTTP: POST, GET, PUT, DELETE)
 - **Casos Negativos**: 1 escenario (validación de errores)
 - **Total Operaciones Validadas**: 5 llamadas HTTP con assertions de estado y contrato
+ - **Pruebas de validación:** Se añadieron escenarios negativos y un `Scenario Outline` que valida campos obligatorios y formatos (p. ej. email, administrador). Este `Scenario Outline` se ejecuta de forma data-driven para cubrir múltiples combinaciones de entrada inválida.
 
 #### �🔄 Flujo CRUD Completo (Caso Positivo) - Escenario Encadenado
 Se implementó un **único escenario que cubre el ciclo de vida completo** del recurso:

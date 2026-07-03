@@ -42,3 +42,20 @@ Feature: Gestión de Usuarios en la API ServeRest
     When method get
     Then status 400
     And match response.message == 'Usuário não encontrado'
+
+  # ... Conservas intactos tus escenarios anteriores de Background y CRUD Positivo ...
+
+  Scenario Outline: Validar restricciones y campos obligatorios al registrar usuario (Casos Negativos)
+    Given path 'usuarios'
+    And request { nome: '<nome>', email: '<email>', password: '<password>', administrador: '<administrador>' }
+    When method post
+    Then status 400
+    And match response["<campo_error>"] == "<mensaje_esperado>"
+
+    Examples:
+      | nome        | email                 | password | administrador | campo_error    | mensaje_esperado                          |
+      |             | outline_1@test.com    | pass123  | true          | nome           | nome não pode ficar em branco             |
+      | Camilo Test |                       | pass123  | true          | email          | email não pode ficar em branco            |
+      | Camilo Test | outline_invalid_email | pass123  | true          | email          | email deve ser um email válido            |
+      | Camilo Test | outline_3@test.com    |          | true          | password       | password não pode ficar em branco         |
+      | Camilo Test | outline_4@test.com    | pass123  |               | administrador  | administrador deve ser 'true' ou 'false'  |
