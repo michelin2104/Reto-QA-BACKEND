@@ -5,6 +5,7 @@ Feature: Gestión de Usuarios en la API ServeRest
     * def dataGen = read('helpers/data-generator.js')
     * def schemas = read('users-schemas.json')
 
+  @happy
   Scenario: Flujo CRUD Completo de un Usuario (Casos Positivos)
     # 1. POST - Registrar Usuario
     Given path 'usuarios'
@@ -36,6 +37,7 @@ Feature: Gestión de Usuarios en la API ServeRest
     Then status 200
     And match response.message == 'Registro excluído com sucesso'
 
+  @unhappy
   Scenario: Intentar buscar un usuario con un ID que no existe (Caso Negativo)
     # Enviamos un ID falso pero válido de 16 caracteres para forzar el error 404/400 de no encontrado
     Given path 'usuarios', '0000000000000000'
@@ -45,6 +47,7 @@ Feature: Gestión de Usuarios en la API ServeRest
 
   # ... Conservas intactos tus escenarios anteriores de Background y CRUD Positivo ...
 
+  @unhappyoutline
   Scenario Outline: Validar restricciones y campos obligatorios al registrar usuario (Casos Negativos)
     Given path 'usuarios'
     And request { nome: '<nome>', email: '<email>', password: '<password>', administrador: '<administrador>' }

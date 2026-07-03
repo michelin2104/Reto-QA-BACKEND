@@ -37,6 +37,13 @@ Para lanzar toda la suite de pruebas automatizadas, simplemente ejecuta:
 npm test
 ```
 
+Si quieres ejecutar solo escenarios específicos, puedes usar tags en el archivo feature. Por ejemplo:
+```bash
+java -jar karate.jar src/test/java/users/users.feature --tags "@happy"
+java -jar karate.jar src/test/java/users/users.feature --tags "@unhappy"
+java -jar karate.jar src/test/java/users/users.feature --tags "@unhappyoutline"
+```
+
 ## 📊 Reportes de Prueba
 
 Al finalizar la ejecución, Karate genera de forma automática un reporte visual interactivo en HTML. Puedes consultarlo abriendo el siguiente archivo en cualquier navegador web:
