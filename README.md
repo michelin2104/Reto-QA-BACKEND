@@ -52,7 +52,24 @@ target/karate-reports/karate-summary.html
 - **Node.js**: Gestor de dependencias y orquestador de scripts para descargar y ejecutar Karate
 - **Integración Híbrida**: Aprovecha la simplicidad de Node.js con la robustez de Java/Karate para APIs REST
 
-### 1. Patrones y Buenas Prácticas Utilizadas
+### 📡 Endpoints Testeados
+
+Todos los endpoints apuntan a la **URL base**: `https://serverest.dev`
+
+| # | Método | Endpoint | Descripción | Parámetros | Respuesta | Status |
+|----|--------|----------|-------------|-----------|----------|--------|
+| 1 | `POST` | `/usuarios` | Registrar un nuevo usuario en el sistema | **Body JSON**: `nome` (string), `email` (string), `password` (string), `administrador` (boolean) | `{ "message": "Cadastro realizado com sucesso", "_id": "abc123..." }` | **201** |
+| 2 | `GET` | `/usuarios/{id}` | Recuperar información completa de un usuario específico por su ID | **Path Param**: `{id}` = ID único del usuario | `{ "nome": "...", "email": "...", "password": "...", "administrador": "...", "_id": "..." }` | **200** |
+| 3 | `PUT` | `/usuarios/{id}` | Actualizar datos completos de un usuario existente | **Path Param**: `{id}` + **Body JSON**: `nome`, `email`, `password`, `administrador` | `{ "message": "Registro alterado com sucesso" }` | **200** |
+| 4 | `DELETE` | `/usuarios/{id}` | Eliminar un usuario del sistema (eliminación física) | **Path Param**: `{id}` = ID único del usuario | `{ "message": "Registro excluído com sucesso" }` | **200** |
+| 5 | `GET` | `/usuarios/{id}` (con ID inexistente) | Intentar buscar un usuario con ID que no existe (validación de error) | **Path Param**: `{id}` = ID inválido o inexistente | `{ "message": "Usuário não encontrado" }` | **400** |
+
+**Nota sobre el Flujo de Datos:**
+- El **paso 1 (POST)** captura el `_id` retornado y lo almacena en la variable `userId`
+- Los **pasos 2, 3 y 4** utilizan este `userId` para referenciar el usuario creado
+- Esto garantiza que se valida el **ciclo de vida completo** del usuario en el servidor
+
+### 2. Patrones y Buenas Prácticas Utilizadas
 
 #### 📌 A. BDD (Behavior Driven Development) con Gherkin
 Se utilizó **Gherkin** (lenguaje específico de dominio para BDD) para escribir los tests de forma legible y entendible por stakeholders no técnicos:
@@ -131,9 +148,14 @@ And match response == schemas.createUserResponse
 
 Esto asegura que la API retorne exactamente los campos esperados con los tipos correctos.
 
-### 2. Estrategia de Escenarios
+### 3. Estrategia de Escenarios
 
-#### 🔄 Flujo CRUD Completo (Caso Positivo) - Escenario Encadenado
+#### � Cobertura de Casos
+- **Casos Positivos**: 1 escenario (contiene 4 operaciones HTTP: POST, GET, PUT, DELETE)
+- **Casos Negativos**: 1 escenario (validación de errores)
+- **Total Operaciones Validadas**: 5 llamadas HTTP con assertions de estado y contrato
+
+#### �🔄 Flujo CRUD Completo (Caso Positivo) - Escenario Encadenado
 Se implementó un **único escenario que cubre el ciclo de vida completo** del recurso:
 
 ```
@@ -189,7 +211,7 @@ Scenario: Intentar buscar un usuario con un ID que no existe
 - ✅ API responde de forma controlada sin crashes
 - ✅ Mensajes de error son consistentes
 
-### 3. Herramientas y Reportes
+### 4. Herramientas y Reportes
 
 Karate genera automáticamente **reportes interactivos en HTML** después de cada ejecución:
 - `karate-summary.html`: Resumen visual con estadísticas
